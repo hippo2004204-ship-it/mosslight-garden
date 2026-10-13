@@ -13,6 +13,8 @@ npm run dev
 
 接著用瀏覽器開啟 Vite 顯示的本機網址。正式建置可執行 `npm run build`。
 
+推送至 GitHub 的 `main` 分支後，GitHub Actions 會自動建置並發佈到 GitHub Pages。網站會使用 `mosslight-garden` repo 對應的子路徑。
+
 ## 操作方式
 
 - 點選底部種子卡，再點花園中的空花圃即可播種。
