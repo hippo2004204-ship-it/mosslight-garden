@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f2e9" />
+    <meta name="description" content="在苔光小徑種下溫柔的蘑菇，慢慢收集森林露珠。" />
+    <title>苔光小徑 — 一座慢慢長大的小森林</title>
+  </head>
+  <body>
+    <div id="app" class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="苔光小徑首頁">
+          <span class="brand-mark" aria-hidden="true">✿</span>
+          <span class="brand-name">苔光小徑</span>
+        </a>
+        <div class="greeting">
+          <span class="eyebrow">THE LITTLE MOSS GARDEN</span>
+          <strong>今天也慢慢來，森林正替你長大。</strong>
+        </div>
+        <div class="topbar-right">
+          <div class="weather-pill"><span class="weather-icon">☀</span><span>微風晴朗</span><i></i><span id="clock">上午 08:42</span></div>
+          <div class="topbar-divider"></div>
+          <div class="dew-counter"><span class="dew-icon">✦</span><span id="dew-count">120</span><small>露珠</small><button class="plus-button" id="dew-info" aria-label="露珠說明">+</button></div>
+          <button class="sound-button" id="sound-toggle" aria-label="切換環境音" title="環境音開關"><span id="sound-icon">♫</span></button>
+        </div>
+      </header>
+
+      <main class="main-layout">
+        <aside class="left-rail">
+          <section class="welcome-card panel-card">
+            <div class="welcome-top"><span class="tiny-sun">✳</span><span id="day-label">森林日記・第 1 天</span></div>
+            <h1>把心事，<br /><em>交給蘑菇。</em></h1>
+            <p>不必急著去哪裡，<br />先看看今天長出了什麼吧。</p>
+            <div class="welcome-footer"><span class="avatar">🌱</span><span>你的森林<br /><b>正在悄悄變好</b></span><span class="sparkle">✦</span></div>
+          </section>
+
+          <section class="level-card panel-card">
+            <div class="section-heading"><span>森林成長</span><span class="level-pill" id="level-label">LV. 1</span></div>
+            <div class="level-meta"><span>苔蘚學徒</span><span id="xp-label">24 / 100 XP</span></div>
+            <div class="progress-track"><div class="progress-fill" id="xp-progress" style="width:24%"></div></div>
+            <div class="level-foot"><span>再種一點點，會有新驚喜</span><span>🌿</span></div>
+          </section>
+
+          <section class="mood-card panel-card">
+            <div class="mood-icon">☁</div>
+            <div><small>今日森林心情</small><strong>安靜而明亮</strong></div>
+            <span class="mood-sparkle">✧</span>
+            <div class="mood-note">「植物不會催促自己，<br />你也可以。」</div>
+          </section>
+        </aside>
+
+        <section class="garden-column">
+          <div class="garden-toolbar">
+            <div class="garden-title"><span class="garden-title-icon">⌁</span><div><h2>苔光小徑</h2><p>你的第一座小小菌菇園</p></div></div>
+            <div class="garden-toolbar-right"><span class="live-status"><i></i> 森林正在呼吸</span><button class="icon-button" id="garden-help" title="玩法說明" aria-label="玩法說明">?</button><button class="icon-button more-button" id="garden-menu" title="更多" aria-label="更多選項">···</button></div>
+          </div>
+          <div class="garden-frame">
+            <div id="game-container" aria-label="蘑菇花園遊戲畫面"></div>
+            <div class="scene-caption"><span>🌤</span><span>一陣柔柔的風，吹過苔蘚。</span></div>
+            <div class="garden-hint" id="garden-hint"><span class="hint-icon">✦</span><span>挑一顆種子，再點一塊空地，開始你的森林日記。</span></div>
+            <div class="toast" id="toast" role="status"></div>
+          </div>
+          <div class="garden-footer"><div class="footer-stat"><span class="footer-stat-icon">🍄</span><span><b id="planted-count">1</b><small>株蘑菇</small></span></div><span class="footer-separator"></span><div class="footer-stat"><span class="footer-stat-icon dew-small">✦</span><span><b id="collected-count">0</b><small>已收露珠</small></span></div><div class="footer-note"><span>⌁</span> 你的花園會在背景裡繼續生長</div></div>
+        </section>
+
+        <aside class="right-rail">
+          <section class="tasks-panel panel-card">
+            <div class="panel-title-row"><div><span class="panel-overline">LITTLE THINGS TO DO</span><h2>今日小願望</h2></div><span class="task-flower">✿</span></div>
+            <p class="task-intro">做一點點就很好，森林會記得。</p>
+            <div class="task-list" id="task-list"></div>
+            <div class="task-bottom"><span>每天都會有新的小願望</span><span>↻</span></div>
+          </section>
+          <section class="collection-panel panel-card">
+            <div class="panel-title-row"><div><span class="panel-overline">YOUR COLLECTION</span><h2>森林圖鑑</h2></div><span class="book-icon">▤</span></div>
+            <div class="collection-preview" id="collection-preview">
+              <span class="collection-mushroom">🍄</span>
+              <div><strong id="collection-name">還沒遇見蘑菇</strong><small id="collection-subtitle">種下第一顆種子來認識它</small></div>
+              <span class="collection-arrow">›</span>
+            </div>
+            <div class="collection-progress"><span id="species-count">1 / 6 種</span><div><i id="species-progress" style="width:17%"></i></div><span>↗</span></div>
+          </section>
+          <div class="tiny-note"><span>☾</span><p>離開一會兒也沒關係。<br /><b>回來時，驚喜也許已經長好了。</b></p></div>
+        </aside>
+      </main>
+
+      <footer class="seed-dock">
+        <div class="dock-intro"><span class="seed-bag">⌑</span><div><strong>選一顆種子</strong><small>讓新的朋友來花園作客</small></div></div>
+        <div class="seed-options" id="seed-options"></div>
+        <div class="dock-side"><span class="dock-separator"></span><button class="inventory-button" id="inventory-button"><span>▣</span><span>種子收藏<small id="seed-total">3 顆種子</small></span><b>›</b></button></div>
+      </footer>
+
+      <div class="modal-backdrop" id="modal-backdrop" aria-hidden="true">
+        <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+          <button class="modal-close" id="modal-close" aria-label="關閉">×</button>
+          <div class="modal-deco">✿</div>
+          <span class="panel-overline">A LITTLE NOTE</span>
+          <h2 id="modal-title">照顧花園的小方法</h2>
+          <div class="modal-content" id="modal-content"></div>
+          <button class="modal-action" id="modal-action">知道了，慢慢來</button>
+        </section>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
