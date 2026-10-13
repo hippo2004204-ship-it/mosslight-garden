@@ -169,7 +169,7 @@ export class GardenScene extends Phaser.Scene {
         g.lineStyle(1.5, 0x769676, hover ? 0.9 : 0.65);
         g.beginPath().moveTo(point.x - 4, plusY).lineTo(point.x + 4, plusY).strokePath();
         g.beginPath().moveTo(point.x, plusY - 4).lineTo(point.x, plusY + 4).strokePath();
-        continue;
+        return;
       }
 
       const seed = this.seeds?.find((item) => item.id === plant.type);
