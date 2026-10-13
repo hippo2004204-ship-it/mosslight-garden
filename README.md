@@ -15,6 +15,9 @@ npm run dev
 
 推送至 GitHub 的 `main` 分支後，GitHub Actions 會自動建置並發佈到 GitHub Pages。網站會使用 `mosslight-garden` repo 對應的子路徑。
 
+- **遊戲網站：** https://hippo2004204-ship-it.github.io/mosslight-garden/
+- **GitHub 原始碼：** https://github.com/hippo2004204-ship-it/mosslight-garden
+
 ## 操作方式
 
 - 點選底部種子卡，再點花園中的空花圃即可播種。
