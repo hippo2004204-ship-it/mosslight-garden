@@ -1,0 +1,1108 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="認識遊戲式學習，透過十個可操作的 Phaser 範例探索遊戲機制如何支持學習。">
+  <title>玩出理解｜遊戲式學習機制展</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <style>
+    html { overflow-y: scroll }
+    html { scrollbar-gutter: stable }
+    html { scroll-behavior: smooth }
+    body { padding-left: calc(100vw - 100%) }
+    body { background: #fff5e8 }
+    body { color: #51402e }
+    body { font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif }
+    body { line-height: 1.75 }
+    a { color: #9b6b2d }
+    a { text-underline-offset: 0.22em }
+    .site-nav { position: sticky }
+    .site-nav { top: 0 }
+    .site-nav { z-index: 1030 }
+    .site-nav { background: #fff5e8 }
+    .site-nav { border-bottom: 1px solid #eadcc7 }
+    .brand-mark { width: 38px }
+    .brand-mark { height: 38px }
+    .brand-mark { display: grid }
+    .brand-mark { place-items: center }
+    .brand-mark { border-radius: 50% }
+    .brand-mark { background: #f2dfbb }
+    .brand-mark { color: #9b6b2d }
+    .brand-mark { font-size: 21px }
+    .navbar-brand { color: #51402e }
+    .navbar-brand { font-weight: 800 }
+    .nav-link { color: #78674e }
+    .nav-link { font-size: 0.92rem }
+    .nav-link:hover { color: #bd7b35 }
+    .eyebrow { color: #ad7037 }
+    .eyebrow { font-size: 0.76rem }
+    .eyebrow { font-weight: 800 }
+    .eyebrow { letter-spacing: 0.16em }
+    .hero { padding-top: 4.5rem }
+    .hero { padding-bottom: 4rem }
+    .hero-panel { position: relative }
+    .hero-panel { overflow: hidden }
+    .hero-panel { border-radius: 28px }
+    .hero-panel { background: linear-gradient(125deg, #f8e9ce 0%, #fae9d0 62%, #f1d2ad 100%) }
+    .hero-panel { padding: clamp(2rem, 6vw, 5rem) }
+    .hero-panel { min-height: 435px }
+    .hero h1 { max-width: 760px }
+    .hero h1 { color: #503a23 }
+    .hero h1 { font-family: Georgia, "Noto Serif TC", serif }
+    .hero h1 { font-size: clamp(2.5rem, 6vw, 5.2rem) }
+    .hero h1 { font-weight: 800 }
+    .hero h1 { letter-spacing: -0.045em }
+    .hero-copy { max-width: 570px }
+    .hero-copy { color: #7d6a51 }
+    .hero-copy { font-size: 1.08rem }
+    .btn-gold { background: #9b6b2d }
+    .btn-gold { border-color: #9b6b2d }
+    .btn-gold { color: #fffaf2 }
+    .btn-gold:hover { background: #835a28 }
+    .btn-gold:hover { border-color: #835a28 }
+    .btn-gold:hover { color: #fffaf2 }
+    .loop-card { position: relative }
+    .loop-card { z-index: 1 }
+    .loop-card { max-width: 390px }
+    .loop-card { margin-left: auto }
+    .loop-card { background: rgba(255, 250, 242, 0.9) }
+    .loop-card { border: 1px solid rgba(155, 107, 45, 0.17) }
+    .loop-card { border-radius: 22px }
+    .loop-card { padding: 1.5rem }
+    .loop-step { display: flex }
+    .loop-step { align-items: center }
+    .loop-step { gap: 0.8rem }
+    .loop-step { padding: 0.55rem 0 }
+    .step-dot { width: 34px }
+    .step-dot { height: 34px }
+    .step-dot { display: grid }
+    .step-dot { place-items: center }
+    .step-dot { flex: 0 0 auto }
+    .step-dot { border-radius: 50% }
+    .step-dot { background: #f2dfbb }
+    .step-dot { color: #9b6b2d }
+    .step-dot { font-size: 0.85rem }
+    .step-dot { font-weight: 800 }
+    .stat-row { display: flex }
+    .stat-row { flex-wrap: wrap }
+    .stat-row { gap: 0.8rem }
+    .stat-pill { background: #fffaf2 }
+    .stat-pill { border: 1px solid #eadcc9 }
+    .stat-pill { border-radius: 999px }
+    .stat-pill { color: #78674e }
+    .stat-pill { font-size: 0.86rem }
+    .stat-pill { padding: 0.45rem 0.9rem }
+    .section-space { padding-top: 4.5rem }
+    .section-space { padding-bottom: 4.5rem }
+    .section-kicker { color: #ad7037 }
+    .section-kicker { font-size: 0.76rem }
+    .section-kicker { font-weight: 800 }
+    .section-kicker { letter-spacing: 0.16em }
+    .section-title { color: #513c27 }
+    .section-title { font-family: Georgia, "Noto Serif TC", serif }
+    .section-title { font-size: clamp(2rem, 4vw, 3.25rem) }
+    .section-title { font-weight: 800 }
+    .section-intro { max-width: 720px }
+    .section-intro { color: #81715a }
+    .concept-card { height: 100% }
+    .concept-card { background: #fffaf2 }
+    .concept-card { border: 1px solid #ebdeca }
+    .concept-card { border-radius: 20px }
+    .concept-card { padding: 1.6rem }
+    .concept-card h3 { color: #9b6b2d }
+    .concept-card h3 { font-size: 1.05rem }
+    .concept-card h3 { font-weight: 800 }
+    .concept-card p { color: #7e6d55 }
+    .concept-icon { width: 43px }
+    .concept-icon { height: 43px }
+    .concept-icon { display: grid }
+    .concept-icon { place-items: center }
+    .concept-icon { border-radius: 14px }
+    .concept-icon { background: #f8e2bf }
+    .concept-icon { font-size: 1.2rem }
+    .loop-band { background: #715631 }
+    .loop-band { border-radius: 24px }
+    .loop-band { color: #fff5e8 }
+    .loop-band { padding: clamp(1.5rem, 4vw, 3rem) }
+    .loop-band .muted { color: #efdfc5 }
+    .cycle-number { color: #f2c76b }
+    .cycle-number { font-family: Georgia, serif }
+    .cycle-number { font-size: 1.6rem }
+    .cycle-number { font-weight: 800 }
+    .mechanism-card { background: #fffaf2 }
+    .mechanism-card { border: 1px solid #ebdeca }
+    .mechanism-card { border-radius: 24px }
+    .mechanism-card { box-shadow: 0 14px 38px rgba(91, 65, 34, 0.07) }
+    .mechanism-card { overflow: hidden }
+    .mechanism-card { padding: clamp(1.2rem, 3vw, 2.2rem) }
+    .mechanism-number { color: #ba783a }
+    .mechanism-number { font-family: Georgia, serif }
+    .mechanism-number { font-size: 2.1rem }
+    .mechanism-number { font-weight: 800 }
+    .mechanism-tag { display: inline-flex }
+    .mechanism-tag { border-radius: 999px }
+    .mechanism-tag { background: #f5e8ce }
+    .mechanism-tag { color: #88622e }
+    .mechanism-tag { font-size: 0.78rem }
+    .mechanism-tag { font-weight: 700 }
+    .mechanism-tag { padding: 0.28rem 0.72rem }
+    .mechanism-card h3 { color: #513c27 }
+    .mechanism-card h3 { font-size: clamp(1.35rem, 2.4vw, 1.8rem) }
+    .mechanism-card h3 { font-weight: 800 }
+    .mechanism-card p { color: #81715a }
+    .learning-note { border-left: 3px solid #d3a052 }
+    .learning-note { color: #78674e }
+    .learning-note { padding-left: 0.9rem }
+    .learning-note strong { color: #9b6b2d }
+    .game-label { color: #ad7037 }
+    .game-label { font-size: 0.73rem }
+    .game-label { font-weight: 800 }
+    .game-label { letter-spacing: 0.12em }
+    .frame-shell { overflow: hidden }
+    .frame-shell { height: 640px }
+    .frame-shell { border: 1px solid #ead9bd }
+    .frame-shell { border-radius: 16px }
+    .frame-shell { background: #f8ead6 }
+    .demo-frame { display: block }
+    .demo-frame { width: 150% }
+    .demo-frame { min-width: 0 }
+    .demo-frame { height: 970px }
+    .demo-frame { border: 0 }
+    .demo-frame { transform: scale(0.66) }
+    .demo-frame { transform-origin: top left }
+    .frame-caption { color: #918069 }
+    .frame-caption { font-size: 0.78rem }
+    .idea-lab { position: relative }
+    .idea-lab { overflow: hidden }
+    .idea-lab { border-radius: 26px }
+    .idea-lab { background: linear-gradient(135deg, #715631, #9b6b2d) }
+    .idea-lab { color: #fff5e8 }
+    .idea-lab { padding: clamp(1.5rem, 4vw, 3rem) }
+    .idea-lab::after { content: "✦" }
+    .idea-lab::after { position: absolute }
+    .idea-lab::after { right: 3% }
+    .idea-lab::after { top: 2% }
+    .idea-lab::after { color: rgba(255, 238, 199, 0.16) }
+    .idea-lab::after { font-size: 9rem }
+    .idea-lab::after { pointer-events: none }
+    .idea-lab h2 { color: #fff8ec }
+    .idea-lab h2 { font-family: Georgia, "Noto Serif TC", serif }
+    .idea-lab h2 { font-weight: 800 }
+    .idea-lab .eyebrow { color: #f2c66f }
+    .idea-copy { color: #efdfc5 }
+    .idea-choice { border: 1px solid rgba(255, 247, 232, 0.46) }
+    .idea-choice { border-radius: 999px }
+    .idea-choice { background: rgba(255, 250, 242, 0.1) }
+    .idea-choice { color: #fff5e8 }
+    .idea-choice { padding: 0.48rem 0.88rem }
+    .idea-choice { cursor: pointer }
+    .idea-choice { transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease }
+    .idea-choice:hover { transform: translateY(-2px) }
+    .idea-choice.active { background: #fff2d5 }
+    .idea-choice.active { border-color: #fff2d5 }
+    .idea-choice.active { color: #715631 }
+    .idea-draw { border: 0 }
+    .idea-draw { border-radius: 999px }
+    .idea-draw { background: #f2c66f }
+    .idea-draw { color: #5b4324 }
+    .idea-draw { font-weight: 800 }
+    .idea-draw { padding: 0.72rem 1.15rem }
+    .idea-draw { cursor: pointer }
+    .idea-draw { transition: transform 0.2s ease, background 0.2s ease }
+    .idea-draw:hover { transform: translateY(-2px) }
+    .idea-draw:hover { background: #ffda87 }
+    .idea-result { position: relative }
+    .idea-result { z-index: 1 }
+    .idea-result { min-height: 258px }
+    .idea-result { background: #fffaf2 }
+    .idea-result { border: 1px solid #f1dfc0 }
+    .idea-result { border-radius: 20px }
+    .idea-result { color: #51402e }
+    .idea-result { padding: 1.4rem }
+    .idea-result { box-shadow: 0 14px 34px rgba(74, 51, 25, 0.14) }
+    .idea-result.drawn { animation: idea-pop 0.42s ease }
+    .idea-result-label { color: #ad7037 }
+    .idea-result-label { font-size: 0.7rem }
+    .idea-result-label { font-weight: 800 }
+    .idea-result-label { letter-spacing: 0.14em }
+    .idea-result-icon { width: 48px }
+    .idea-result-icon { height: 48px }
+    .idea-result-icon { display: grid }
+    .idea-result-icon { place-items: center }
+    .idea-result-icon { border-radius: 15px }
+    .idea-result-icon { background: #f5e8ce }
+    .idea-result-icon { color: #ad7037 }
+    .idea-result-icon { font-size: 1.5rem }
+    .idea-result h3 { color: #513c27 }
+    .idea-result h3 { font-size: 1.3rem }
+    .idea-result h3 { font-weight: 800 }
+    .idea-result p { color: #78674e }
+    .idea-link { color: #9b6b2d }
+    .idea-link { font-weight: 800 }
+    .idea-link { text-decoration: none }
+    .idea-link:hover { color: #715631 }
+    .tarot-panel { background: linear-gradient(145deg, #49384f, #68515d) }
+    .tarot-panel { border: 1px solid #8a7181 }
+    .tarot-panel { border-radius: 28px }
+    .tarot-panel { color: #fff5e8 }
+    .tarot-panel { padding: clamp(1.4rem, 4vw, 3rem) }
+    .tarot-overline { color: #f2c66f }
+    .tarot-overline { font-size: 0.72rem }
+    .tarot-overline { font-weight: 800 }
+    .tarot-overline { letter-spacing: 0.15em }
+    .tarot-heading { color: #fff8ec }
+    .tarot-heading { font-family: Georgia, "Noto Serif TC", serif }
+    .tarot-description { color: #eee0ce }
+    .tarot-slot { text-align: center }
+    .tarot-position { color: #f0cd83 }
+    .tarot-position { font-size: 0.8rem }
+    .tarot-position { font-weight: 800 }
+    .tarot-position { letter-spacing: 0.08em }
+    .tarot-card { display: block }
+    .tarot-card { width: min(100%, 210px) }
+    .tarot-card { aspect-ratio: 7 / 10 }
+    .tarot-card { margin: 0 auto }
+    .tarot-card { padding: 0 }
+    .tarot-card { border: 0 }
+    .tarot-card { background: transparent }
+    .tarot-card { perspective: 1100px }
+    .tarot-card { cursor: pointer }
+    .tarot-card:disabled { cursor: default }
+    .tarot-card:focus-visible { outline: 3px solid #f2c66f }
+    .tarot-card:focus-visible { outline-offset: 5px }
+    .tarot-slot.is-shuffling { position: relative }
+    .tarot-slot.is-shuffling .tarot-card { animation: tarot-shuffle 1.5s ease-in-out }
+    .tarot-slot[data-position="present"].is-shuffling .tarot-card { animation-delay: 0.12s }
+    .tarot-slot[data-position="advice"].is-shuffling .tarot-card { animation-delay: 0.24s }
+    .tarot-card-inner { position: relative }
+    .tarot-card-inner { display: block }
+    .tarot-card-inner { width: 100% }
+    .tarot-card-inner { height: 100% }
+    .tarot-card-inner { transform-style: preserve-3d }
+    .tarot-card-inner { transition: transform 0.72s cubic-bezier(0.2, 0.75, 0.2, 1) }
+    .tarot-card.is-revealed .tarot-card-inner { transform: rotateY(180deg) }
+    .tarot-face { position: absolute }
+    .tarot-face { inset: 0 }
+    .tarot-face { display: flex }
+    .tarot-face { flex-direction: column }
+    .tarot-face { align-items: center }
+    .tarot-face { justify-content: space-between }
+    .tarot-face { overflow: hidden }
+    .tarot-face { border-radius: 18px }
+    .tarot-face { backface-visibility: hidden }
+    .tarot-face { box-shadow: 0 16px 28px rgba(25, 16, 30, 0.26) }
+    .tarot-back { border: 2px solid #d8bd79 }
+    .tarot-back { background: radial-gradient(circle at center, #685262, #453449 74%) }
+    .tarot-back { color: #eed68e }
+    .tarot-back { padding: 1.1rem }
+    .tarot-back::before { content: "" }
+    .tarot-back::before { position: absolute }
+    .tarot-back::before { inset: 9px }
+    .tarot-back::before { border: 1px solid rgba(238, 214, 142, 0.56) }
+    .tarot-back::before { border-radius: 12px }
+    .tarot-back::after { content: "✦" }
+    .tarot-back::after { position: absolute }
+    .tarot-back::after { top: 50% }
+    .tarot-back::after { left: 50% }
+    .tarot-back::after { transform: translate(-50%, -50%) }
+    .tarot-back::after { color: rgba(238, 214, 142, 0.2) }
+    .tarot-back::after { font-size: 5rem }
+    .tarot-back-top, .tarot-back-bottom { position: relative }
+    .tarot-back-top, .tarot-back-bottom { z-index: 1 }
+    .tarot-back-top, .tarot-back-bottom { font-size: 0.64rem }
+    .tarot-back-top, .tarot-back-bottom { letter-spacing: 0.2em }
+    .tarot-rosette { position: relative }
+    .tarot-rosette { z-index: 1 }
+    .tarot-rosette { width: 76px }
+    .tarot-rosette { height: 76px }
+    .tarot-rosette { display: grid }
+    .tarot-rosette { place-items: center }
+    .tarot-rosette { border: 1px solid rgba(238, 214, 142, 0.7) }
+    .tarot-rosette { border-radius: 50% }
+    .tarot-rosette { font-size: 2rem }
+    .tarot-front { transform: rotateY(180deg) }
+    .tarot-front { border: 2px solid #d8bd79 }
+    .tarot-front { background: linear-gradient(145deg, #fff9ed, #f0dfc2) }
+    .tarot-front { color: #513c4e }
+    .tarot-front { padding: 1.05rem }
+    .tarot-roman { color: #936b39 }
+    .tarot-roman { font-family: Georgia, serif }
+    .tarot-roman { font-size: 0.82rem }
+    .tarot-art { display: block }
+    .tarot-art { width: 100% }
+    .tarot-art { min-height: 0 }
+    .tarot-art { flex: 1 }
+    .tarot-art svg { display: block }
+    .tarot-art svg { width: 100% }
+    .tarot-art svg { height: 100% }
+    .tarot-arcana-name { font-family: Georgia, "Noto Serif TC", serif }
+    .tarot-arcana-name { font-size: 1.28rem }
+    .tarot-arcana-name { font-weight: 800 }
+    .tarot-caption { color: #9a8367 }
+    .tarot-caption { font-size: 0.58rem }
+    .tarot-caption { letter-spacing: 0.16em }
+    .tarot-card-name { color: #f7dfa0 }
+    .tarot-card-name { font-family: Georgia, "Noto Serif TC", serif }
+    .tarot-card-name { font-size: 1.2rem }
+    .tarot-card-name { font-weight: 800 }
+    .tarot-reading { min-height: 3.8em }
+    .tarot-reading { color: #eee0ce }
+    .tarot-reading { font-size: 0.92rem }
+    .tarot-draw { border: 1px solid #f2d68c }
+    .tarot-draw { border-radius: 999px }
+    .tarot-draw { background: #f2c66f }
+    .tarot-draw { color: #4e3b30 }
+    .tarot-draw { font-weight: 800 }
+    .tarot-draw { padding: 0.7rem 1.2rem }
+    .tarot-draw { cursor: pointer }
+    .tarot-draw:hover { background: #ffda87 }
+    .tarot-note { color: #d6c5d1 }
+    .tarot-note { font-size: 0.78rem }
+    .tarot-status { min-height: 1.5em }
+    .tarot-status { color: #f2d68c }
+    @keyframes tarot-shuffle {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0) scale(1) }
+      18% { transform: translate3d(-34px, -14px, 0) rotate(-9deg) scale(1.02) }
+      38% { transform: translate3d(32px, -20px, 0) rotate(8deg) scale(1.04) }
+      60% { transform: translate3d(28px, 0, 0) rotate(6deg) scale(0.99) }
+      82% { transform: translate3d(-30px, -16px, 0) rotate(-7deg) scale(1.02) }
+    }
+    .tarot-analysis { border: 1px solid #e6cf92 }
+    .tarot-analysis { border-radius: 18px }
+    .tarot-analysis { background: #fff8e9 }
+    .tarot-analysis { color: #574532 }
+    .tarot-analysis { padding: clamp(1.1rem, 3vw, 1.6rem) }
+    .tarot-analysis h4 { color: #715631 }
+    .tarot-analysis h4 { font-size: 1.08rem }
+    .tarot-analysis h4 { font-weight: 800 }
+    .tarot-analysis p { color: #78674e }
+    .tarot-action { border-top: 1px solid #eadcc7 }
+    .tarot-action { padding-top: 1rem }
+    .tarot-action-label { color: #ad7037 }
+    .tarot-action-label { font-size: 0.72rem }
+    .tarot-action-label { font-weight: 800 }
+    .tarot-action-label { letter-spacing: 0.08em }
+    @media (prefers-reduced-motion: reduce) {
+      .tarot-card-inner { transition: none }
+      .tarot-slot.is-shuffling .tarot-card { animation: none }
+    }
+    @keyframes idea-pop {
+      0% { transform: scale(0.96); opacity: 0.65 }
+      70% { transform: scale(1.02) }
+      100% { transform: scale(1); opacity: 1 }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .idea-result.drawn { animation: none }
+      .idea-choice { transition: none }
+      .idea-draw { transition: none }
+    }
+    .design-card { background: #f3e5ca }
+    .design-card { border-radius: 22px }
+    .design-card { padding: 1.5rem }
+    .design-card h3 { color: #9b6b2d }
+    .design-card h3 { font-size: 1rem }
+    .design-card h3 { font-weight: 800 }
+    .design-card p { color: #78664e }
+    .source-list a { display: inline-block }
+    .source-list a { margin-right: 1rem }
+    .source-list a { margin-bottom: 0.5rem }
+    .site-footer { background: #513c27 }
+    .site-footer { color: #f8ecda }
+    .site-footer a { color: #f2c66f }
+    .site-footer a { margin-right: 1rem }
+    .small-muted { color: #c8b69b }
+    .anchor-offset { scroll-margin-top: 1rem }
+    @media (max-width: 991px) {
+      .loop-card { margin-top: 2rem }
+      .hero-panel { min-height: 0 }
+      .frame-shell { height: 640px }
+      .demo-frame { width: 155% }
+      .demo-frame { height: 1000px }
+      .demo-frame { transform: scale(0.64) }
+    }
+    @media (max-width: 575px) {
+      .hero { padding-top: 2rem }
+      .hero { padding-bottom: 2rem }
+      .idea-lab::after { display: none }
+      .frame-shell { height: 430px }
+      .demo-frame { width: 315% }
+      .demo-frame { height: 1356px }
+      .demo-frame { transform: scale(0.317) }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar site-nav" aria-label="主要導覽">
+    <div class="container py-2 d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <a class="navbar-brand d-flex align-items-center gap-2 m-0" href="#top">
+        <span class="brand-mark" aria-hidden="true">✿</span>
+        <span>玩出理解</span>
+      </a>
+      <div class="d-flex flex-wrap align-items-center gap-1 gap-md-3">
+        <a class="nav-link px-2" href="#about">認識遊戲式學習</a>
+        <a class="nav-link px-2" href="#idea-lab">玩法靈感</a>
+        <a class="nav-link px-2" href="#mechanisms">十種遊戲機制</a>
+        <a class="nav-link px-2" href="#design">設計小提醒</a>
+        <a class="nav-link px-2" href="#tarot">塔羅占卜</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-panel">
+          <div class="row align-items-center">
+            <div class="col-lg-7">
+              <p class="eyebrow mb-3">PLAY WITH PURPOSE</p>
+              <h1 class="mb-4">遊戲式學習<br>讓知識在遊玩中發生</h1>
+              <p class="hero-copy mb-4">讓知識進入規則，讓每一次嘗試都有回饋。從十個可操作的 Phaser 範例，看看遊戲機制如何承接學習目標。</p>
+              <div class="d-flex flex-wrap gap-3 align-items-center">
+                <a class="btn btn-gold btn-lg rounded-pill px-4" href="#mechanisms">探索十種機制 <span aria-hidden="true">↘</span></a>
+                <span class="text-secondary small">每個範例都能直接在頁面中遊玩</span>
+              </div>
+              <div class="stat-row mt-4">
+                <span class="stat-pill">十種玩法機制</span>
+                <span class="stat-pill">十個 Phaser 範例</span>
+                <span class="stat-pill">一個學習循環</span>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="loop-card">
+                <p class="eyebrow mb-2">LEARNING LOOP</p>
+                <h2 class="h4 fw-bold mb-3">讓每一步都帶來理解</h2>
+                <div class="loop-step"><span class="step-dot">01</span><span>遇見一個值得解決的問題</span></div>
+                <div class="loop-step"><span class="step-dot">02</span><span>選擇方法並親自嘗試</span></div>
+                <div class="loop-step"><span class="step-dot">03</span><span>看見結果，再調整策略</span></div>
+                <div class="loop-step"><span class="step-dot">04</span><span>把新理解帶進下一關</span></div>
+                <p class="small text-secondary mt-3 mb-0">遊戲提供安全的試錯空間，設計則把練習連回真正的學習目標。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section-space anchor-offset">
+      <div class="container">
+        <div class="row align-items-end gy-3 mb-4">
+          <div class="col-lg-7">
+            <p class="section-kicker mb-2">01 / THE IDEA</p>
+            <h2 class="section-title mb-0">什麼是遊戲式學習</h2>
+          </div>
+          <div class="col-lg-5">
+            <p class="section-intro mb-0">遊戲式學習把完整遊戲作為學習活動，讓知識與技能成為完成目標所需的能力。它不同於在既有課程中加入積分或徽章的遊戲化設計。玩家透過行動、觀察結果、修正想法，在遊玩中練習並建立理解。</p>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <article class="concept-card">
+              <div class="concept-icon mb-3" aria-hidden="true">◎</div>
+              <h3>玩法承載學習</h3>
+              <p class="mb-0">學生要運用正在學的概念，才能完成任務。學習不是遊戲之外附加的一張測驗。</p>
+            </article>
+          </div>
+          <div class="col-md-6">
+            <article class="concept-card">
+              <div class="concept-icon mb-3" aria-hidden="true">↗</div>
+              <h3>回饋引導下一步</h3>
+              <p class="mb-0">清楚的結果、提示和重試機會，幫助學生理解策略為何有效，並嘗試更好的方法。</p>
+            </article>
+          </div>
+        </div>
+        <div class="loop-band mt-4">
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-3">
+              <p class="eyebrow mb-2">A GOOD ROUND</p>
+              <h2 class="h3 fw-bold mb-0">一個好的學習回合</h2>
+            </div>
+            <div class="col-lg-3 col-md-4">
+              <div class="cycle-number">01</div>
+              <h3 class="h5 fw-bold">提出問題</h3>
+              <p class="muted small mb-0">任務對準一個明確的學習目標</p>
+            </div>
+            <div class="col-lg-3 col-md-4">
+              <div class="cycle-number">02</div>
+              <h3 class="h5 fw-bold">試做策略</h3>
+              <p class="muted small mb-0">讓學生能選擇、操作和承擔結果</p>
+            </div>
+            <div class="col-lg-3 col-md-4">
+              <div class="cycle-number">03</div>
+              <h3 class="h5 fw-bold">讀取回饋</h3>
+              <p class="muted small mb-0">把結果轉化成提示與下一次嘗試</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="idea-lab" class="section-space anchor-offset">
+      <div class="container">
+        <div class="idea-lab">
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-7">
+              <p class="eyebrow mb-2">PLAY IDEA LAB</p>
+              <h2 class="h1 mb-3">讓學習目標<br>抽出一種遊戲玩法</h2>
+              <p class="idea-copy mb-4">選一個你想帶給學生的練習，再抽一張靈感卡。把機制換成你的課程內容，下一堂課就有了新起點。</p>
+              <div class="d-flex flex-wrap gap-2 mb-3" role="group" aria-label="選擇學習目標">
+                <button class="idea-choice active" type="button" data-goal="remember" aria-pressed="true">記住概念</button>
+                <button class="idea-choice" type="button" data-goal="observe" aria-pressed="false">觀察與分類</button>
+                <button class="idea-choice" type="button" data-goal="reason" aria-pressed="false">推理與判斷</button>
+                <button class="idea-choice" type="button" data-goal="plan" aria-pressed="false">規劃與分配</button>
+              </div>
+              <button id="idea-draw" class="idea-draw" type="button">抽一張靈感卡 <span aria-hidden="true">✦</span></button>
+            </div>
+            <div class="col-lg-5">
+              <div id="idea-result" class="idea-result" aria-live="polite" aria-atomic="true">
+                <p class="idea-result-label mb-3">YOUR GAME RECIPE</p>
+                <div id="idea-icon" class="idea-result-icon mb-3" aria-hidden="true">✿</div>
+                <h3 id="idea-title" class="mb-2">你的課程靈感卡</h3>
+                <p id="idea-description" class="mb-3">先選左側的學習目標，再抽一張卡看看可以怎麼玩。</p>
+                <a id="idea-link" class="idea-link" href="#mechanisms" hidden>看看對應的遊戲範例 ↗</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mechanisms" class="section-space anchor-offset">
+      <div class="container">
+        <div class="row align-items-end gy-3 mb-5">
+          <div class="col-lg-7">
+            <p class="section-kicker mb-2">02 / PLAYABLE MECHANICS</p>
+            <h2 class="section-title mb-0">十種機制，十個可玩範例</h2>
+          </div>
+          <div class="col-lg-5">
+            <p class="section-intro mb-0">先玩一會，再想想要練習什麼。以下範例來自 Phaser 官方範例庫，遊戲畫面直接嵌在卡片裡。</p>
+          </div>
+        </div>
+
+        <div class="d-grid gap-4">
+          <article id="mechanism-01" class="mechanism-card">
+            <div class="row g-4 align-items-center">
+              <div class="col-lg-4">
+                <div class="d-flex align-items-center gap-3 mb-3"><span class="mechanism-number">01</span><span class="mechanism-tag">目標與收集</span></div>
+                <h3>讓任務變得看得見</h3>
+                <p>把學習拆成可完成的小目標。每次找到線索或收集物件，都讓學生看見自己離目標更近。</p>
+                <div class="learning-note mb-4"><strong>適合練習</strong><br>觀察、辨識、依條件蒐集資訊</div>
+                <p class="game-label mb-1">PHASER EXAMPLE</p>
+                <p class="fw-bold text-dark mb-0">First Game Part 10</p>
+              </div>
+              <div class="col-lg-8">
+                <div class="frame-shell"><iframe id="first-game-frame" class="demo-frame" loading="lazy" scrolling="no" title="First Game Part 10 遊戲範例" src="https://labs.phaser.io/phaser4-view.html?src=src%2Fgames%2Ffirstgame%2Fpart10.js&amp;v=3.90.0"></iframe></div>
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-2">
+                  <p class="frame-caption mb-0">先點選遊戲畫面，再用方向鍵移動，收集星星並躲避炸彈</p>
+                  <button id="first-game-restart" class="btn btn-sm btn-outline-secondary" type="button">重新開始</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article id="mechanism-02" class="mechanism-card">
+            <div class="row g-4 align-items-center">
+              <div class="col-lg-4">
+                <div class="d-flex align-items-center gap-3 mb-3"><span class="mechanism-number">02</span><span class="mechanism-tag">放置成長與累積</span></div>
+                <h3>離開一會兒，回來收穫新驚喜</h3>
+                <p>種下蘑菇後，森林會隨時間慢慢成長。安排種植順序、等待成熟，再收集露珠與解鎖新種類，讓長期目標藏在療癒的日常裡。</p>
+                <div class="learning-note mb-4"><strong>適合練習</strong><br>時間概念、資源分配、長期規劃</div>
+                <p class="game-label mb-1">PHASER EXAMPLE</p>
+                <p class="fw-bold text-dark mb-0">苔光小徑｜蘑菇放置遊戲</p>
+              </div>
+              <div class="col-lg-8">
+                <div class="frame-shell"><iframe class="demo-frame" loading="lazy" scrolling="no" title="苔光小徑蘑菇放置遊戲範例" src="https://hippo2004204-ship-it.github.io/mosslight-garden/"></iframe></div>
+                <p class="frame-caption mt-2 mb-0">選種子、種下蘑菇，等待生長並收集露珠</p>
+              </div>
+            </div>
+          </article>
+
+          <article id="mechanism-03" class="mechanism-card">
+            <div class="row g-4 align-items-center">
+              <div class="col-lg-4">
+                <div class="d-flex align-items-center gap-3 mb-3"><span class="mechanism-number">03</span><span class="mechanism-tag">漸進挑戰</span></div>
+                <h3>難度跟著熟練度前進</h3>
+                <p>先讓學生掌握基本規則，再逐步提高速度或精度要求。挑戰要讓人需要專注，也要保留成功的可能。</p>
+                <div class="learning-note mb-4"><strong>適合練習</strong><br>精熟技能、穩定操作、逐步增加難度</div>
+                <p class="game-label mb-1">PHASER EXAMPLE</p>
+                <p class="fw-bold text-dark mb-0">Stacker</p>
+              </div>
+              <div class="col-lg-8">
+                <div class="frame-shell"><iframe class="demo-frame" loading="lazy" scrolling="no" title="Stacker 遊戲範例" src="https://labs.phaser.io/phaser4-view.html?src=src%2Fgames%2Fstacker%2Fstacker.js"></iframe></div>
+                <p class="frame-caption mt-2 mb-0">按下空白鍵或點擊，抓準時機放下方塊</p>
+              </div>
+            </div>
+          </article>
+
+          <article id="mechanism-04" class="mechanism-card">
+            <div class="row g-4 align-items-center">
+              <div class="col-lg-4">
+                <div class="d-flex align-items-center gap-3 mb-3"><span class="mechanism-number">04</span><span class="mechanism-tag">選擇與後果</span></div>
+                <h3>每個決定都帶來不同結果</h3>
+                <p>讓學生在安全的情境裡評估風險、選擇行動，再根據結果檢視原先的判斷。</p>
+                <div class="learning-note mb-4"><strong>適合練習</strong><br>判斷證據、衡量風險、說明決策理由</div>
+                <p class="game-label mb-1">PHASER EXAMPLE</p>
+                <p class="fw-bold text-dark mb-0">Bank Panic</p>
+              </div>
+              <div class="col-lg-8">
+                <div class="frame-shell"><iframe class="demo-frame" loading="lazy" scrolling="no" title="Bank Panic 遊戲範例" src="https://labs.phaser.io/phaser4-view.html?src=src%2Fgames%2Fbank%20panic%2Fmain.js&amp;module=true"></iframe></div>
+                <p class="frame-caption mt-2 mb-0">觀察門口出現的人物，再決定是否射擊</p>
+              </div>
+            </div>
+          </article>
+
+          <article id="mechanism-05" class="mechanism-card">
+            <div class="row g-4 align-items-center">
+              <div class="col-lg-4">
+                <div class="d-flex align-items-center gap-3 mb-3"><span class="mechanism-number">05</span><span class="mechanism-tag">記憶提取</span></div>
+                <h3>從記憶中找回關聯</h3>
+                <p>翻牌時先提取記憶，再用配對結果確認線索。可把卡片換成詞語和定義、符號和名稱或問題和答案。</p>
+                <div class="learning-note mb-4"><strong>適合練習</strong><br>詞彙、符號、概念配對與間隔複習</div>
+                <p class="game-label mb-1">PHASER EXAMPLE</p>
+                <p class="fw-bold text-dark mb-0">Card Memory</p>
+              </div>
+              <div class="col-lg-8">
+                <div class="frame-shell"><iframe class="demo-frame" loading="lazy" scrolling="no" title="Card Memory 遊戲範例" src="https://labs.phaser.io/phaser4-view.html?src=src%2Fgames%2Fcard%20memory%2Fmain.js&amp;module=true"></iframe></div>
+                <p class="frame-caption mt-2 mb-0">翻開卡片，試著找出相同圖案</p>
+              </div>
+            </div>
+          </article>
+
+          <article id="mechanism-06" class="mechanism-card">
+            <div class="row g-4 align-items-center">
+              <div class="col-lg-4">
+                <div class="d-flex align-items-center gap-3 mb-3"><span class="mechanism-number">06</span><span class="mechanism-tag">模式辨識</span></div>
+                <h3>發現相同與不同之處</h3>
+                <p>學生要比較圖案、辨認特徵並找出相同項目。改變分類規則，就能練習新的概念線索。</p>
+                <div class="learning-note mb-4"><strong>適合練習</strong><br>分類、觀察特徵、找出規律</div>
+                <p class="game-label mb-1">PHASER EXAMPLE</p>
+                <p class="fw-bold text-dark mb-0">Emoji Match</p>
+              </div>
+              <div class="col-lg-8">
+                <div class="frame-shell"><iframe class="demo-frame" loading="lazy" scrolling="no" title="Emoji Match 遊戲範例" src="https://labs.phaser.io/phaser4-view.html?src=src%2Fgames%2Femoji%20match%2Fmain.js&amp;module=true"></iframe></div>
+                <p class="frame-caption mt-2 mb-0">在限時內找出成對的表情圖案</p>
+              </div>
+            </div>
+          </article>
+
+          <article id="mechanism-07" class="mechanism-card">
+            <div class="row g-4 align-items-center">
+              <div class="col-lg-4">
+                <div class="d-flex align-items-center gap-3 mb-3"><span class="mechanism-number">07</span><span class="mechanism-tag">空間推理</span></div>
+                <h3>安排順序，拼出整體</h3>
+                <p>移動局部拼圖片時，學生要想像位置變化和下一步的影響，再逐步建立整體圖像。</p>
+                <div class="learning-note mb-4"><strong>適合練習</strong><br>方位、順序、地圖和視覺組織</div>
+                <p class="game-label mb-1">PHASER EXAMPLE</p>
+                <p class="fw-bold text-dark mb-0">Sliding Puzzle</p>
+              </div>
+              <div class="col-lg-8">
+                <div class="frame-shell"><iframe class="demo-frame" loading="lazy" scrolling="no" title="Sliding Puzzle 遊戲範例" src="https://labs.phaser.io/phaser4-view.html?src=src%2Fgames%2Fsliding%20puzzle%2Fmain.js&amp;module=true"></iframe></div>
+                <p class="frame-caption mt-2 mb-0">移動相鄰拼圖片，還原完整圖像</p>
+              </div>
+            </div>
+          </article>
+
+          <article id="mechanism-08" class="mechanism-card">
+            <div class="row g-4 align-items-center">
+              <div class="col-lg-4">
+                <div class="d-flex align-items-center gap-3 mb-3"><span class="mechanism-number">08</span><span class="mechanism-tag">邏輯推理</span></div>
+                <h3>根據線索提出假設</h3>
+                <p>玩家根據數字線索推斷安全位置。把推理過程說出來，能讓猜測變成可檢查的想法。</p>
+                <div class="learning-note mb-4"><strong>適合練習</strong><br>條件推理、機率概念、解釋證據</div>
+                <p class="game-label mb-1">PHASER EXAMPLE</p>
+                <p class="fw-bold text-dark mb-0">Minesweeper</p>
+              </div>
+              <div class="col-lg-8">
+                <div class="frame-shell"><iframe class="demo-frame" loading="lazy" scrolling="no" title="Minesweeper 遊戲範例" src="https://labs.phaser.io/phaser4-view.html?src=src%2Fgames%2Fminesweeper%2Fminesweeper.js"></iframe></div>
+                <p class="frame-caption mt-2 mb-0">左鍵開格，右鍵標記你推測的地雷</p>
+              </div>
+            </div>
+          </article>
+
+          <article id="mechanism-09" class="mechanism-card">
+            <div class="row g-4 align-items-center">
+              <div class="col-lg-4">
+                <div class="d-flex align-items-center gap-3 mb-3"><span class="mechanism-number">09</span><span class="mechanism-tag">有限步數規劃</span></div>
+                <h3>在限制中比較策略</h3>
+                <p>步數有限時，每次選色都要考慮它能擴大的範圍。學生可以比較路徑，選擇更有效率的策略。</p>
+                <div class="learning-note mb-4"><strong>適合練習</strong><br>預算、資源分配、策略規劃</div>
+                <p class="game-label mb-1">PHASER EXAMPLE</p>
+                <p class="fw-bold text-dark mb-0">Flood Fill</p>
+              </div>
+              <div class="col-lg-8">
+                <div class="frame-shell"><iframe class="demo-frame" loading="lazy" scrolling="no" title="Flood Fill 遊戲範例" src="https://labs.phaser.io/phaser4-view.html?src=src%2Fgames%2Fflood%20fill%2Fflood-fill.js"></iframe></div>
+                <p class="frame-caption mt-2 mb-0">選擇顏色擴展區域，留意剩餘步數</p>
+              </div>
+            </div>
+          </article>
+
+          <article id="mechanism-10" class="mechanism-card">
+            <div class="row g-4 align-items-center">
+              <div class="col-lg-4">
+                <div class="d-flex align-items-center gap-3 mb-3"><span class="mechanism-number">10</span><span class="mechanism-tag">因果預測</span></div>
+                <h3>從結果理解規則</h3>
+                <p>預測球的方向，調整擋板位置，再觀察碰撞結果。這種循環很適合練習因果關係和假設驗證。</p>
+                <div class="learning-note mb-4"><strong>適合練習</strong><br>角度、速度、因果關係與反覆驗證</div>
+                <p class="game-label mb-1">PHASER EXAMPLE</p>
+                <p class="fw-bold text-dark mb-0">Breakout</p>
+              </div>
+              <div class="col-lg-8">
+                <div class="frame-shell"><iframe class="demo-frame" loading="lazy" scrolling="no" title="Breakout 遊戲範例" src="https://labs.phaser.io/phaser4-view.html?src=src%2Fgames%2Fbreakout%2Fbreakout.js"></iframe></div>
+                <p class="frame-caption mt-2 mb-0">移動滑鼠控制擋板，點擊發球</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="design" class="section-space anchor-offset">
+      <div class="container">
+        <div class="row align-items-end gy-3 mb-4">
+          <div class="col-lg-7">
+            <p class="section-kicker mb-2">03 / DESIGN NOTES</p>
+            <h2 class="section-title mb-0">讓機制真的支持學習</h2>
+          </div>
+          <div class="col-lg-5">
+            <p class="section-intro mb-0">同一種機制可以帶來樂趣，也可以帶來挫折。教學目標、難度和回饋需要一起設計。</p>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <article class="design-card h-100">
+              <h3>先問要學會什麼</h3>
+              <p class="mb-0">先寫下希望學生能做出的行動，再挑選能支持這個行動的玩法。</p>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="design-card h-100">
+              <h3>讓回饋提供線索</h3>
+              <p class="mb-0">除了告訴學生對或錯，也指出他們可以檢查的概念和下一步。</p>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="design-card h-100">
+              <h3>重視過程與反思</h3>
+              <p class="mb-0">讓學生說明策略、比較結果，並把遊戲中的理解帶回課堂情境。</p>
+            </article>
+          </div>
+        </div>
+        <div class="concept-card mt-4">
+          <p class="section-kicker mb-2">READ MORE</p>
+          <h3 class="mb-3">延伸閱讀與範例來源</h3>
+          <div class="source-list">
+            <a href="https://www.tandfonline.com/doi/full/10.1080/00461520.2015.1122533" target="_blank" rel="noreferrer">遊戲式學習基礎研究 ↗</a>
+            <a href="https://github.com/phaserjs/examples/tree/master/public/src/games" target="_blank" rel="noreferrer">Phaser 官方遊戲範例 ↗</a>
+            <a href="https://labs.phaser.io/phaser4-index.html" target="_blank" rel="noreferrer">Phaser 線上範例瀏覽器 ↗</a>
+            <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" target="_blank" rel="noreferrer">Bootstrap 官方入門 ↗</a>
+          </div>
+          <p class="small text-secondary mt-3 mb-0">遊戲畫面來自 Phaser 官方範例與苔光小徑。嵌入內容需要網路連線。</p>
+        </div>
+      </div>
+    </section>
+    <section id="tarot" class="section-space anchor-offset">
+      <div class="container">
+        <div class="row align-items-end gy-3 mb-4">
+          <div class="col-lg-7">
+            <p class="section-kicker mb-2">04 / TAROT READING</p>
+            <h2 class="section-title mb-0">三張牌，照見你的下一步</h2>
+          </div>
+          <div class="col-lg-5">
+            <p class="section-intro mb-0">在心裡想一個最近在意的問題，抽出起點、現在與指引。三張牌都翻開後，還會整理整個牌陣的分析與行動建議。</p>
+          </div>
+        </div>
+        <div class="tarot-panel">
+          <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+            <div>
+              <p class="tarot-overline mb-2">A LITTLE TAROT MOMENT</p>
+              <h3 class="tarot-heading h4 mb-2">讓直覺替你挑出三張牌</h3>
+              <p class="tarot-description mb-0">先默念一個問題，洗牌後依序翻開。每次都會抽到新牌，三張全開後顯示整體分析。</p>
+            </div>
+            <button id="tarot-draw" class="tarot-draw" type="button">洗牌並抽出三張 <span aria-hidden="true">✦</span></button>
+          </div>
+          <div class="row g-4">
+            <div class="col-md-4">
+              <article class="tarot-slot" data-position="past">
+                <p class="tarot-position mb-2">01　過去的線索</p>
+                <button class="tarot-card" type="button" data-tarot-slot="0" aria-label="起點之牌，請先抽牌" aria-pressed="false" disabled>
+                  <span class="tarot-card-inner">
+                    <span class="tarot-face tarot-back" aria-hidden="true">
+                      <span class="tarot-back-top">MYSTIC ORACLE</span>
+                      <span class="tarot-rosette">☾</span>
+                      <span class="tarot-back-bottom">INTUITION AND INSIGHT</span>
+                    </span>
+                    <span class="tarot-face tarot-front" aria-hidden="true">
+                      <span class="tarot-roman" data-tarot-roman></span>
+                      <span class="tarot-art" data-tarot-art aria-hidden="true"></span>
+                      <span class="tarot-arcana-name" data-tarot-name></span>
+                      <span class="tarot-caption">MAJOR ARCANA</span>
+                    </span>
+                  </span>
+                </button>
+                <h4 class="tarot-card-name mt-3 mb-2">尚未翻牌</h4>
+                <p class="tarot-reading mb-0" aria-live="polite">洗牌後，點擊卡牌揭開過去的線索。</p>
+              </article>
+            </div>
+            <div class="col-md-4">
+              <article class="tarot-slot" data-position="present">
+                <p class="tarot-position mb-2">02　當下的能量</p>
+                <button class="tarot-card" type="button" data-tarot-slot="1" aria-label="當下之牌，請先抽牌" aria-pressed="false" disabled>
+                  <span class="tarot-card-inner">
+                    <span class="tarot-face tarot-back" aria-hidden="true">
+                      <span class="tarot-back-top">MYSTIC ORACLE</span>
+                      <span class="tarot-rosette">✦</span>
+                      <span class="tarot-back-bottom">INTUITION AND INSIGHT</span>
+                    </span>
+                    <span class="tarot-face tarot-front" aria-hidden="true">
+                      <span class="tarot-roman" data-tarot-roman></span>
+                      <span class="tarot-art" data-tarot-art aria-hidden="true"></span>
+                      <span class="tarot-arcana-name" data-tarot-name></span>
+                      <span class="tarot-caption">MAJOR ARCANA</span>
+                    </span>
+                  </span>
+                </button>
+                <h4 class="tarot-card-name mt-3 mb-2">尚未翻牌</h4>
+                <p class="tarot-reading mb-0" aria-live="polite">洗牌後，點擊卡牌看看當下的提示。</p>
+              </article>
+            </div>
+            <div class="col-md-4">
+              <article class="tarot-slot" data-position="advice">
+                <p class="tarot-position mb-2">03　下一步的指引</p>
+                <button class="tarot-card" type="button" data-tarot-slot="2" aria-label="指引之牌，請先抽牌" aria-pressed="false" disabled>
+                  <span class="tarot-card-inner">
+                    <span class="tarot-face tarot-back" aria-hidden="true">
+                      <span class="tarot-back-top">MYSTIC ORACLE</span>
+                      <span class="tarot-rosette">☼</span>
+                      <span class="tarot-back-bottom">INTUITION AND INSIGHT</span>
+                    </span>
+                    <span class="tarot-face tarot-front" aria-hidden="true">
+                      <span class="tarot-roman" data-tarot-roman></span>
+                      <span class="tarot-art" data-tarot-art aria-hidden="true"></span>
+                      <span class="tarot-arcana-name" data-tarot-name></span>
+                      <span class="tarot-caption">MAJOR ARCANA</span>
+                    </span>
+                  </span>
+                </button>
+                <h4 class="tarot-card-name mt-3 mb-2">尚未翻牌</h4>
+                <p class="tarot-reading mb-0" aria-live="polite">洗牌後，翻開一張給自己的小提醒。</p>
+              </article>
+            </div>
+          </div>
+          <p id="tarot-status" class="tarot-status text-center mt-4 mb-2" aria-live="polite">先默念一個問題，再洗牌抽出三張牌。</p>
+          <div id="tarot-analysis" class="tarot-analysis mt-4" aria-live="polite" hidden>
+            <h4 class="mb-2">✧ 三張牌的整體分析</h4>
+            <p id="tarot-analysis-text" class="mb-3"></p>
+            <div class="tarot-action">
+              <span class="tarot-action-label">可以帶走的小行動</span>
+              <p id="tarot-action-text" class="mb-0 mt-1"></p>
+            </div>
+          </div>
+          <p class="tarot-note text-center mb-0">牌義作為娛樂與自我反思靈感，不代表預言。</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer py-4">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <span>玩出理解 <span class="small-muted">遊戲式學習機制展</span></span>
+      <a href="#top">回到頁首 ↑</a>
+    </div>
+  </footer>
+  <script>
+    const firstGameFrame = document.querySelector('#first-game-frame')
+    document.querySelector('#first-game-restart').addEventListener('click', () => {
+      firstGameFrame.src = firstGameFrame.src
+    })
+  </script>
+  <script>
+    const ideaDeck = {
+      remember: [
+        { number: '05', icon: '▣', name: '記憶提取', game: 'Card Memory', description: '把單字與解釋做成配對卡，翻牌之前先從記憶裡找答案。' },
+      ],
+      observe: [
+        { number: '01', icon: '⌕', name: '目標與收集', game: 'First Game Part 10', description: '安排線索或物件蒐集任務，讓學生邊探索邊辨認特徵。' },
+        { number: '06', icon: '◉', name: '模式辨識', game: 'Emoji Match', description: '把概念線索藏進圖案，讓學生比較特徵並找出規律。' },
+      ],
+      reason: [
+        { number: '04', icon: '↗', name: '選擇與後果', game: 'Bank Panic', description: '提供一組情境線索，請學生先判斷，再觀察選擇帶來的結果。' },
+        { number: '08', icon: '∴', name: '邏輯推理', game: 'Minesweeper', description: '用數字線索推理安全位置，並說出支持判斷的證據。' },
+        { number: '10', icon: '↝', name: '因果預測', game: 'Breakout', description: '先預測碰撞結果，再操作驗證，練習修正自己的假設。' },
+      ],
+      plan: [
+        { number: '02', icon: '✿', name: '放置成長與累積', game: '苔光小徑', description: '安排種植順序與收成時機，看時間和資源如何慢慢累積。' },
+        { number: '03', icon: '▤', name: '漸進挑戰', game: 'Stacker', description: '先練熟基本規則，再逐步提高速度，讓策略跟著熟練度成長。' },
+        { number: '09', icon: '◈', name: '有限步數規劃', game: 'Flood Fill', description: '設定有限步數或材料，請學生比較哪個方案更有效。' },
+      ],
+    }
+    let selectedGoal = 'remember'
+    const ideaButtons = document.querySelectorAll('.idea-choice')
+    ideaButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        selectedGoal = button.dataset.goal
+        ideaButtons.forEach((choice) => {
+          const selected = choice === button
+          choice.classList.toggle('active', selected)
+          choice.setAttribute('aria-pressed', String(selected))
+        })
+      })
+    })
+    document.querySelector('#idea-draw').addEventListener('click', () => {
+      const choices = ideaDeck[selectedGoal]
+      const recipe = choices[Math.floor(Math.random() * choices.length)]
+      const result = document.querySelector('#idea-result')
+      const link = document.querySelector('#idea-link')
+      result.classList.remove('drawn')
+      void result.offsetWidth
+      result.classList.add('drawn')
+      document.querySelector('#idea-icon').textContent = recipe.icon
+      document.querySelector('#idea-title').textContent = `${recipe.name} · ${recipe.game}`
+      document.querySelector('#idea-description').textContent = recipe.description
+      link.href = `#mechanism-${recipe.number}`
+      link.hidden = false
+    })
+  </script>
+  <script>
+    const tarotDeck = [
+      { roman: '0', name: '愚者', symbol: '☼', past: '一份好奇帶你走到現在。', present: '你正站在新起點，還不必知道所有答案。', advice: '先踏出小小一步，讓旅程帶來線索。' },
+      { roman: 'I', name: '魔術師', symbol: '✧', past: '你已累積了比想像更多的能力。', present: '手邊已有工具，現在適合把它們組合起來。', advice: '選一項資源付諸行動，讓想法落地。' },
+      { roman: 'II', name: '女祭司', symbol: '☾', past: '安靜觀察曾讓你發現重要細節。', present: '有些答案還藏在表面之下，先留心感受與訊息。', advice: '暫停一下，寫出你真正想問的問題。' },
+      { roman: 'III', name: '皇后', symbol: '❀', past: '耐心照料的事物已悄悄長大。', present: '你的投入正累積成安全而豐饒的空間。', advice: '照顧好自己的節奏，讓值得的事情繼續生長。' },
+      { roman: 'IV', name: '皇帝', symbol: '♜', past: '清楚的界線和安排曾幫你穩住方向。', present: '眼前需要一點架構與優先順序。', advice: '把大目標整理成今天可以完成的一件事。' },
+      { roman: 'VI', name: '戀人', symbol: '♡', past: '重要的選擇塑造了你現在的位置。', present: '這一刻需要對齊你的價值與選項。', advice: '選擇真正認同的方向，並接納它帶來的可能。' },
+      { roman: 'VII', name: '戰車', symbol: '✦', past: '你曾靠著明確目標穿越混亂。', present: '方向已逐漸清楚，專注能帶動前進。', advice: '設定一個里程碑，穩住步伐繼續走。' },
+      { roman: 'VIII', name: '力量', symbol: '∞', past: '你曾以耐心完成看似艱難的事。', present: '柔韌的力量正在幫你面對挑戰。', advice: '溫柔堅持，也記得肯定自己走過的路。' },
+      { roman: 'IX', name: '隱者', symbol: '☽', past: '獨處和反思曾帶給你重要答案。', present: '安靜梳理會比急著行動更有幫助。', advice: '留一段沒有干擾的時間，聽聽自己的想法。' },
+      { roman: 'X', name: '命運之輪', symbol: '◉', past: '一次轉變讓你看見新的可能。', present: '局勢正在轉動，事情未必照原計畫發展。', advice: '保持彈性，留意變化帶來的入口。' },
+      { roman: 'XII', name: '倒吊人', symbol: '◇', past: '暫停曾讓你看見不同角度。', present: '卡住的地方或許需要一種新看法。', advice: '先換個位置思考，再決定下一步。' },
+      { roman: 'XVII', name: '星星', symbol: '☆', past: '希望曾陪伴你度過不確定。', present: '微小的信任正在慢慢恢復。', advice: '先選一件能讓你感到安定的小事。' },
+      { roman: 'XVIII', name: '月亮', symbol: '☽', past: '不確定曾讓你更敏銳地留意線索。', present: '有些訊息還不清楚，別急著下定論。', advice: '多蒐集事實，再溫柔地面對心中的不安。' },
+      { roman: 'XIX', name: '太陽', symbol: '☀', past: '清晰而愉快的經驗為你留下力量。', present: '你有機會看清事情的真相與快樂。', advice: '分享你的成果，讓喜悅被看見。' },
+      { roman: 'XXI', name: '世界', symbol: '◎', past: '長途努力帶你完成了一個重要階段。', present: '你正走向階段性的完成與整合。', advice: '停下來慶祝，也把經驗帶進下一段旅程。' },
+    ]
+    const tarotThemes = {
+      愚者: { family: '探索', theme: '好奇與新開始', action: '挑一件不必完美的小事，先試著開始' },
+      魔術師: { family: '行動', theme: '手邊已有的資源', action: '列出手邊的三項資源，選一項先用起來' },
+      女祭司: { family: '覺察', theme: '安靜觀察', action: '留五分鐘寫下你真正想問的問題' },
+      皇后: { family: '滋養', theme: '耐心照料', action: '替正在成長的計畫留出穩定時間' },
+      皇帝: { family: '結構', theme: '清楚的規劃', action: '寫下優先順序，完成最重要的一件事' },
+      戀人: { family: '抉擇', theme: '符合價值的選擇', action: '比較眼前的選項，選一個最符合自己重視之事的方向' },
+      戰車: { family: '行動', theme: '明確的目標', action: '設定一個容易確認的小里程碑' },
+      力量: { family: '韌性', theme: '耐心與勇氣', action: '給自己一次重試的機會，並記下已經做到的部分' },
+      隱者: { family: '覺察', theme: '安靜整理', action: '留一段不受打擾的時間整理想法' },
+      命運之輪: { family: '轉變', theme: '接納變化', action: '分清楚哪些事情可以掌握，先處理其中一件' },
+      倒吊人: { family: '轉變', theme: '換個角度思考', action: '試著從相反的角度重看目前的難題' },
+      星星: { family: '希望', theme: '慢慢恢復的信心', action: '做一件能讓自己感到安定的小事' },
+      月亮: { family: '覺察', theme: '面對尚未釐清之處', action: '先查證一項事實，再決定接下來怎麼做' },
+      太陽: { family: '明朗', theme: '清晰與喜悅', action: '分享一項成果，並記下它如何發生' },
+      世界: { family: '完成', theme: '整合與收尾', action: '回顧已完成的部分，再為下一段訂一個小目標' },
+    }
+    const tarotPositions = ['過去的線索', '當下的能量', '下一步的指引']
+    const tarotIllustrations = {
+      愚者: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M57 111 76 43" stroke="#9b7048" stroke-width="3"/><path d="M69 47q8-10 16 0q-8 4-16 0" fill="#d8765d"/><circle cx="96" cy="62" r="8" fill="#e9bd83"/><path d="M89 70q-17 17-10 46h32q-1-27-12-46z" fill="#bc6456"/><path d="m83 84-17 17m34-13 15 13m-26 15-8 21m20-21 10 20" fill="none"/><path d="M113 137q7-8 15-4l5 8 8 2-2 4-8-1-3 7-4-1 1-8-8-2-3 6-4-1 2-9z" fill="#d6bd86"/></g>`,
+      魔術師: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M70 48c6-8 12-8 18 0-6 6-12 6-18 0zm18 0c6-8 12-8 18 0-6 6-12 6-18 0z" fill="none" stroke="#e6ca7d"/><circle cx="90" cy="66" r="8" fill="#e9bd83"/><path d="M82 74q-11 12-9 40h35q3-25-10-40z" fill="#b9504f"/><path d="m78 84-23-18m43 18 25-24M89 114v18" fill="none"/><path d="M49 132h82l-7 9H56z" fill="#8c644d"/><circle cx="67" cy="127" r="4" fill="#e6ca7d"/><path d="M87 123h9v7h-9z" fill="#8b9b83"/><path d="M109 123h8v8h-8z" fill="#8b7897"/></g>`,
+      女祭司: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M50 66h18v76H50z" fill="#d5d0c5"/><path d="M112 66h18v76h-18z" fill="#4b3e50"/><path d="M89 50a11 11 0 1 0 0 22a8 8 0 1 1 0-22z" fill="#ead18b" stroke="none"/><circle cx="91" cy="75" r="8" fill="#e9bd83"/><path d="M82 83q-12 16-9 47h37q2-30-11-47z" fill="#637489"/><path d="M73 112h39v21H73z" fill="#b69267"/><path d="M70 143h45" fill="none"/><path d="M76 133q14 8 29 0" fill="none" stroke="#ead18b"/></g>`,
+      皇后: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m70 58 5-14 9 11 8-17 8 17 11-11 1 15z" fill="#e4c779"/><circle cx="91" cy="67" r="8" fill="#e9bd83"/><path d="M82 75q-13 17-9 43h37q2-27-11-43z" fill="#bd6964"/><path d="M76 112h42v17H76z" fill="#d2ae74"/><path d="M58 98q-9 10-12 34m76-37q12 10 15 30" fill="none" stroke="#aab17a"/><path d="M48 132q11-10 20 0m70-4q10-11 18 0" fill="none" stroke="#d6c487"/><path d="M75 142h34" fill="none"/></g>`,
+      皇帝: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M61 57 68 40l13 12 9-19 10 19 14-12 5 17z" fill="#d8b765"/><circle cx="91" cy="65" r="8" fill="#e9bd83"/><path d="M82 73q-12 14-9 38h37q3-24-11-38z" fill="#9e514d"/><path d="M79 76q12 15 24 0l10 46H72z" fill="#bb6355"/><path d="M57 112h68v29H57z" fill="#82634d"/><path d="M62 120h58m-50 8h42" fill="none" stroke="#dfc27a"/><path d="M90 87v24m-8-12h17" fill="none" stroke="#e5cc87"/></g>`,
+      戀人: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M68 52q22-28 44 0l-10 6 8 8-20-7-20 7 8-8z" fill="#d8aa67"/><circle cx="75" cy="84" r="7" fill="#e9bd83"/><circle cx="106" cy="84" r="7" fill="#e9bd83"/><path d="M68 92q-8 15-5 38h25q1-25-7-38z" fill="#687f74"/><path d="M99 92q-8 15-6 38h25q2-25-8-38z" fill="#a65854"/><path d="M73 105 59 116m38-11 18 11" fill="none"/><path d="M47 135v-25m0 5q10-10 19 0m66 20v-30m0 7q9-11 18 0" fill="none" stroke="#8c7956"/><path d="M90 48v17m-5-8h10" fill="none" stroke="#f0d98f"/></g>`,
+      戰車: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M62 70h56v57H62z" fill="#5f5362"/><path d="M72 65q19-19 38 0l-4 9H76z" fill="#d6b66b"/><circle cx="91" cy="82" r="7" fill="#e9bd83"/><path d="M82 89q-9 12-8 30h35q0-20-10-30z" fill="#73839a"/><path d="M80 106h23" fill="none" stroke="#dfc47c"/><path d="M47 130q6-12 18-8l8 9-5 11H49zm59 0q6-12 18-8l8 9-5 11h-19z" fill="#e2d1af"/><circle cx="60" cy="143" r="6" fill="#493e49"/><circle cx="122" cy="143" r="6" fill="#493e49"/><path d="M51 123 43 117m78 6 10-7" fill="none"/></g>`,
+      力量: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M75 51c7-8 13-8 20 0-7 6-13 6-20 0zm20 0c7-8 13-8 20 0-7 6-13 6-20 0z" fill="none" stroke="#e6ca7d"/><circle cx="91" cy="70" r="8" fill="#e9bd83"/><path d="M83 78q-10 16-7 40h34q2-25-11-40z" fill="#eee0bf"/><path d="M75 96q-12 4-18 14m46-13q11 1 15 10" fill="none"/><path d="M87 122q-17-7-20 4-3 10 10 12l20-3q13-7 9-17-4-10-17-3z" fill="#bd8b58"/><path d="M73 126q-7-8-12-2m30 8 13 6m-24-3-3 8m22-9 5 8" fill="none"/></g>`,
+      隱者: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m53 146 32-70 17 32 14-22 26 60z" fill="#66706a"/><path d="M91 51q-15 10-11 26l11 9 14-11q-1-18-14-24z" fill="#c7bba0"/><path d="M79 73q12-10 24 0l10 54H70z" fill="#77677f"/><path d="M82 79q9-9 18 0v14H82z" fill="#4b3f52"/><circle cx="108" cy="72" r="11" fill="#e8ce87"/><circle cx="108" cy="72" r="5" fill="#fff1b7" stroke="none"/><path d="M124 68v76" fill="none" stroke="#9b7651" stroke-width="3"/></g>`,
+      命運之輪: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="90" cy="105" r="43" fill="#c28d54"/><circle cx="90" cy="105" r="32" fill="#e8d6aa"/><circle cx="90" cy="105" r="10" fill="#66536b"/><path d="M90 63v32m0 20v33m-42-43h32m20 0h33M60 75l22 22m16 16 22 22m0-60-22 22m-16 16-22 22" fill="none" stroke="#66536b"/><path d="m84 67 6-9 6 9m24 33 10 5-10 6m-24 34-6 9-6-9m-24-34-10-5 10-6" fill="#e5cd86"/><circle cx="90" cy="105" r="4" fill="#ecd890"/></g>`,
+      倒吊人: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M37 55q53-9 106 0M49 53v22m82-22v22" fill="none" stroke="#8b6848" stroke-width="4"/><path d="M90 55v25" fill="none" stroke="#8b6848" stroke-width="3"/><circle cx="90" cy="88" r="8" fill="#e9bd83"/><path d="M82 96q-10 14-7 34h30q3-21-8-34z" fill="#64827a"/><path d="M82 105 64 94m33 12 18-15m-20 39 11 18m-19-18-9 17" fill="none"/><path d="M81 78q9-8 18 0" fill="none" stroke="#e3c977" stroke-width="4"/></g>`,
+      星星: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m90 26 6 13 14 2-10 10 2 14-12-7-12 7 2-14-10-10 14-2z" fill="#efd98c"/><path d="M52 104q18-10 31 2l-3 23-31 8z" fill="#d8c7a8"/><circle cx="68" cy="96" r="7" fill="#e9bd83"/><path d="M64 105 54 91m25 17 16-7m-17 29-7 15m-8-2 32 2" fill="none"/><path d="M93 118q19 11 41 2m-40 7q20 10 38 4" fill="none" stroke="#8db4b0" stroke-width="3"/><path d="M120 88v30m-7-25h14" fill="none" stroke="#b89161"/></g>`,
+      月亮: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M94 19a22 22 0 1 0 0 42a17 17 0 1 1 0-42z" fill="#e9d18b" stroke="none"/><path d="M35 93h20v48H35zm90 0h20v48h-20z" fill="#85738a"/><path d="M40 99h10m80 0h10" fill="none" stroke="#e7d6ad"/><path d="M78 111q12-18 24 0v31H78z" fill="#9d8059"/><path d="M91 109q-10 12-2 33m4-24q9 8 3 24" fill="none" stroke="#e2d1a9"/><path d="M43 144q7-10 15-2l5 8-4 5H45zm75-1q8-10 16-2l5 8-4 5h-16z" fill="#d5c4a0"/></g>`,
+      太陽: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="90" cy="46" r="23" fill="#efcf71"/><path d="M90 10v10m0 52v10M54 46h10m52 0h10M64 20l8 8m36 36 8 8m0-52-8 8m-36 36-8 8" fill="none" stroke="#e7c56b" stroke-width="4"/><path d="M45 135q44-20 90 0" fill="none" stroke="#7b8d5f" stroke-width="8"/><path d="M82 92q9-10 18 0l-3 14 15 18-20 9-20-9 14-18z" fill="#d7ad63"/><circle cx="90" cy="87" r="7" fill="#e9bd83"/><path d="M86 92v13m8-13v13m-5 28v13m10-13v13" fill="none"/><path d="M51 144q-8-14-15 0m107 0q8-14 15 0" fill="none" stroke="#e3c979"/></g>`,
+      世界: `<g stroke="#332d3a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="90" cy="104" rx="38" ry="57" fill="none" stroke="#a7a16e" stroke-width="7"/><ellipse cx="90" cy="104" rx="31" ry="50" fill="none" stroke="#e4ca82"/><circle cx="90" cy="66" r="7" fill="#e9bd83"/><path d="M83 73q-13 17-7 42l-13 21 7 4 18-17 15 17 7-4-13-21q6-25-7-42z" fill="#72878a"/><path d="m81 88-17 15m34-15 17 15m-25 20-10 21m17-21 13 21" fill="none"/><path d="M25 35q12-15 24 0l-4 17H29zM132 35q12-15 24 0l-4 17h-16z" fill="#d2af6e"/><path d="M25 146q12-13 24 0v15H25zm107 0q12-13 24 0v15h-24z" fill="#a27358"/></g>`,
+    }
+    const renderTarotArt = (card) => `<svg viewBox="0 0 180 190" role="presentation" focusable="false"><rect x="4" y="4" width="172" height="182" rx="8" fill="#d1ae66"/><rect x="8" y="8" width="164" height="174" rx="5" fill="#e8dcc0"/><path d="M12 13h156v105q-37-22-77-7-42-17-79 5z" fill="#484454"/><circle cx="143" cy="34" r="12" fill="#e3c77f"/><g fill="#f2dfaa"><circle cx="30" cy="34" r="1.7"/><circle cx="52" cy="24" r="1.5"/><circle cx="119" cy="27" r="1.5"/><circle cx="37" cy="73" r="1.5"/><circle cx="136" cy="70" r="1.7"/><path d="m68 31 2 4 4 1-4 2-2 4-2-4-4-2 4-1zm43 21 2 4 4 1-4 2-2 4-2-4-4-2 4-1z"/></g><path d="M12 117q39-31 77-10t79-7v78H12z" fill="#5b715f"/><path d="M12 145q40-21 77 1t79-7v43H12z" fill="#354b4d"/>${tarotIllustrations[card.name]}<rect x="9" y="9" width="162" height="172" rx="5" fill="none" stroke="#d9bc77" stroke-width="2"/></svg>`
+    const tarotSlots = Array.from(document.querySelectorAll('.tarot-slot'))
+    const tarotButtons = Array.from(document.querySelectorAll('[data-tarot-slot]'))
+    const tarotStatus = document.querySelector('#tarot-status')
+    const tarotAnalysis = document.querySelector('#tarot-analysis')
+    const tarotDrawButton = document.querySelector('#tarot-draw')
+    let currentTarotCards = []
+    const shuffledTarot = () => {
+      const cards = [...tarotDeck]
+      for (let index = cards.length - 1; index > 0; index -= 1) {
+        const otherIndex = Math.floor(Math.random() * (index + 1))
+        const current = cards[index]
+        cards[index] = cards[otherIndex]
+        cards[otherIndex] = current
+      }
+      return cards.slice(0, 3)
+    }
+    tarotDrawButton.addEventListener('click', () => {
+      if (tarotDrawButton.disabled) return
+      currentTarotCards = shuffledTarot().map((card) => ({ ...card, ...tarotThemes[card.name] }))
+      tarotAnalysis.hidden = true
+      tarotSlots.forEach((slot, index) => {
+        const button = slot.querySelector('.tarot-card')
+        button.disabled = true
+        button.classList.remove('is-revealed')
+        button.setAttribute('aria-pressed', 'false')
+        button.setAttribute('aria-label', `${tarotPositions[index]}，正在洗牌`)
+        button.querySelector('[data-tarot-roman]').textContent = ''
+        button.querySelector('[data-tarot-art]').innerHTML = ''
+        button.querySelector('[data-tarot-name]').textContent = ''
+        slot.querySelector('.tarot-card-name').textContent = '正在洗牌'
+        slot.querySelector('.tarot-reading').textContent = '牌面正在重新排列。'
+        slot.classList.add('is-shuffling')
+      })
+      tarotDrawButton.disabled = true
+      tarotDrawButton.setAttribute('aria-busy', 'true')
+      tarotDrawButton.textContent = '正在洗牌…'
+      tarotStatus.textContent = '正在洗牌，三張牌正在重新排列。'
+      const shuffleTime = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1800
+      window.setTimeout(() => {
+        tarotSlots.forEach((slot, index) => {
+          const button = slot.querySelector('.tarot-card')
+          slot.classList.remove('is-shuffling')
+          button.disabled = false
+          button.setAttribute('aria-label', `${tarotPositions[index]}，點擊翻開卡牌`)
+          slot.querySelector('.tarot-card-name').textContent = '等待翻牌'
+          slot.querySelector('.tarot-reading').textContent = '牌已就位，點擊卡牌揭開訊息。'
+        })
+        tarotDrawButton.disabled = false
+        tarotDrawButton.removeAttribute('aria-busy')
+        tarotDrawButton.innerHTML = '重新洗牌並抽出三張 <span aria-hidden="true">✦</span>'
+        tarotStatus.textContent = '三張牌已排好，依序翻開，看看哪些訊息最貼近此刻。'
+      }, shuffleTime)
+    })
+    tarotButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const index = Number(button.dataset.tarotSlot)
+        const card = currentTarotCards[index]
+        if (!card || button.disabled || button.classList.contains('is-revealed')) return
+        const slot = button.closest('.tarot-slot')
+        button.classList.add('is-revealed')
+        button.setAttribute('aria-pressed', 'true')
+        button.setAttribute('aria-label', `${tarotPositions[index]}：${card.name}`)
+        button.querySelector('[data-tarot-roman]').textContent = card.roman
+        button.querySelector('[data-tarot-art]').innerHTML = renderTarotArt(card)
+        button.querySelector('[data-tarot-name]').textContent = card.name
+        slot.querySelector('.tarot-card-name').textContent = `${card.name} · ${card.roman}`
+        slot.querySelector('.tarot-reading').textContent = card[slot.dataset.position]
+        const revealedCount = tarotButtons.filter((item) => item.classList.contains('is-revealed')).length
+        if (revealedCount === tarotButtons.length) {
+          const [past, present, advice] = currentTarotCards
+          const pastAndPresent = past.family === present.family
+            ? `過去與當下都落在「${present.family}」主題，這份能量仍可成為你處理目前課題的支點。`
+            : `牌陣從「${past.family}」走向「${present.family}」，提醒你舊有經驗和現在的需要可能不同，調整方法比勉強照舊更合適。`
+          const presentAndAdvice = present.family === advice.family
+            ? `當下與指引的主題相近，適合穩定延續目前的方向。`
+            : `下一步帶來「${advice.family}」的新角度，可以先用小步驟試試看是否適合。`
+          document.querySelector('#tarot-analysis-text').textContent = `整個牌陣由${past.name}的「${past.theme}」開始，走到${present.name}的「${present.theme}」，再以${advice.name}的「${advice.theme}」作為下一步。${pastAndPresent}${presentAndAdvice}`
+          document.querySelector('#tarot-action-text').textContent = `${advice.action}。`
+          tarotAnalysis.hidden = false
+          tarotStatus.textContent = '三張牌都已揭曉，整體分析已為你整理好。'
+        } else {
+          tarotStatus.textContent = `已翻開 ${revealedCount} 張，還有 ${tarotButtons.length - revealedCount} 張等待揭曉。`
+        }
+      })
+    })
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
